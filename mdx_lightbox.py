@@ -2,8 +2,11 @@
 Extension for markbox to make all images lightbox
 
 copyright @2015 Alicia Schep <aschep@gmail.com>
+Contributions from github users @aleksan4eg and  @stlehmann 
 
+Updated and uploaded to PyPI 2022 KDMurray / github.com/kdm9 / foss@kdmurray.id.au
 """
+
 import markdown
 from markdown.treeprocessors import Treeprocessor
 from markdown import Extension
@@ -28,7 +31,10 @@ class LightboxImagesTreeprocessor(Treeprocessor):
     def run(self, root):
         parent_map = {c: p for p in root.iter() for c in p}
         i = 0
-        images = root.getiterator("img")
+        try:
+            images = root.iter("img")
+        except AttributeError:
+            images = root.getiterator("img")
         for image in images:
             desc = image.attrib["alt"]
             h = self.hidden_re.match(desc)
@@ -77,6 +83,5 @@ class LightboxImagesExtension(Extension):
         md.treeprocessors.add("lightbox", lightbox_images, "_end")
         md.registerExtension(self)
 
-
-def makeExtension(configs={}):
-    return LightboxImagesExtension(configs=configs)
+def makeExtension(*args, **kwargs):
+    return LightboxImagesExtension(**kwargs)
