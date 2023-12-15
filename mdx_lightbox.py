@@ -10,7 +10,7 @@ Updated and uploaded to PyPI 2022 KDMurray / github.com/kdm9 / foss@kdmurray.id.
 import markdown
 from markdown.treeprocessors import Treeprocessor
 from markdown import Extension
-from markdown.util import etree
+import xml.etree.ElementTree as etree
 import re
 from copy import copy
 
